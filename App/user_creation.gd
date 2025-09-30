@@ -175,3 +175,7 @@ func _on_save_user_pressed():
 			_on_user_folder_created(user_name, user_path)
 		else:
 			show_error("Could not create user folder.")
+
+
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://User Select.tscn")
