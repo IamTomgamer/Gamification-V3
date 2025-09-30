@@ -85,7 +85,8 @@ func _on_user_folder_created(user_name: String, user_path: String):
 func _create_user_files(user_name: String, age: String, user_path: String):
 	var info = {
 		"name": user_name,
-		"age": age
+		"age": age,
+		"role": "Independant"
 	}
 	var info_file = FileAccess.open(user_path + "/info.json", FileAccess.WRITE)
 	if info_file:

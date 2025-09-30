@@ -2,66 +2,47 @@ extends Control
 
 @onready var user_list = $UserScroll/UserList
 
-var users = []
+func _ready():
+	populate_user_cards()
 
 func populate_user_cards():
-	for user in users:
-		var card = preload("res://UserCard.tscn").instantiate()
-		card.get_node("ProfileImage").texture = load(user["image"])
-		card.get_node("UserName").text = user["name"]
-		user_list.add_child(card)
+	var base_path = "user://users"
+	var dir = DirAccess.open(base_path)
+	if dir:
+		dir.list_dir_begin()
+		var folder_name = dir.get_next()
+		while folder_name != "":
+			if dir.current_is_dir() and not folder_name.begins_with("."):
+				var user_path = base_path + "/" + folder_name
+				var info_path = user_path + "/info.json"
+				var pfp_path = user_path + "/pfp.png"
 
-	var add_card = preload("res://UserCard.tscn").instantiate()
-	add_card.get_node("ProfileImage").texture = load("res://Users/Photos/plus.png")
-	add_card.get_node("UserName").text = "Add User"
-	add_card.get_node("UserName").connect("pressed", Callable(self, "_on_add_user_pressed"))
-	user_list.add_child(add_card)
+				if FileAccess.file_exists(info_path):
+					var info_file = FileAccess.open(info_path, FileAccess.READ)
+					var info_data = JSON.parse_string(info_file.get_as_text())
+					info_file.close()
 
-func ensure_users_file_exists():
-	var path = "user://users.json"
-	if not FileAccess.file_exists(path):
-		var default_users = [
-			{
-				"name": "Tom",
-				"image": "res://Users/Photos/Tom.jpeg"
-			}
-		]
-		var file = FileAccess.open(path, FileAccess.WRITE)
-		if file:
-			file.store_string(JSON.stringify(default_users, "\t")) # Pretty format with tabs
-			file.close()
-			print("Created new users.json at", path)
-		else:
-			print("Failed to create users.json")
+					if typeof(info_data) == TYPE_DICTIONARY:
+						var card = preload("res://UserCard.tscn").instantiate()
+						card.get_node("UserName").text = info_data.get("name", folder_name)
+						if FileAccess.file_exists(pfp_path):
+							var image = Image.new()
+							if image.load(pfp_path) == OK:
+								var texture = ImageTexture.create_from_image(image)
+								card.get_node("ProfileImage").texture = texture
+						user_list.add_child(card)
+			folder_name = dir.get_next()
+		dir.list_dir_end()
 	else:
-		print("users.json already exists")
-
-func _ready():
-	ensure_users_file_exists()
-	var file = FileAccess.open("user://Users/users.json", FileAccess.READ)
-	if file:
-		var json_text = file.get_as_text()
-		var data = JSON.parse_string(json_text)
-		if typeof(data) == TYPE_ARRAY:
-			users = data
-		else:
-			print("Failed to parse JSON as array")
-	else:
-		print("Couldn't open users.json")
-		
-	for user in users:
-		var card = preload("res://UserCard.tscn").instantiate()
-		card.get_node("ProfileImage").texture = user.image
-		card.get_node("UserName").text = user.name
-		user_list.add_child(card)
+		print("Could not open users directory")
 
 	# Add User card
 	var add_card = preload("res://UserCard.tscn").instantiate()
 	add_card.get_node("ProfileImage").texture = preload("res://Users/Photos/plus.png")
 	add_card.get_node("UserName").text = "Add User"
 	add_card.get_node("UserName").connect("pressed", Callable(self, "_on_add_user_pressed"))
+	
 	user_list.add_child(add_card)
 
 func _on_add_user_pressed():
 	get_tree().change_scene_to_file("res://UserCreation.tscn")
-	# You can open a popup, show a form, or switch scenes here

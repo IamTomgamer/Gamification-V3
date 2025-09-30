@@ -1,4 +1,6 @@
 Button
+ColorRect
+NinePatchRect
 FileDialog
 TextureRect
 AcceptDialog

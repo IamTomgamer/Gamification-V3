@@ -6,3 +6,6 @@ res://drop_zone.gd
 res://user_creation.gd
 res://user_select.gd
 res://pfp_drop_zone.gd
+res://UserCard.tscn
+res://Themes/UserCard1.tres
+res://Themes/ImagePressed.tres
