@@ -63,5 +63,5 @@ func _ready():
 	user_list.add_child(add_card)
 
 func _on_add_user_pressed():
-	print("Add User button clicked!")
+	get_tree().change_scene_to_file("res://UserCreation.tscn")
 	# You can open a popup, show a form, or switch scenes here

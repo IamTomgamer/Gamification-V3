@@ -1,2 +1,8 @@
 res://User Select.tscn
 res://Pipeline.txt
+res://UserCreation.tscn
+res://Themes/UserCreation.tres
+res://drop_zone.gd
+res://user_creation.gd
+res://user_select.gd
+res://pfp_drop_zone.gd

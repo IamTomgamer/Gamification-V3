@@ -1,4 +1,14 @@
-[gd_scene format=3 uid="uid://bqdcqcnpg48fa"]
+[gd_scene load_steps=6 format=3 uid="uid://bqdcqcnpg48fa"]
+
+[ext_resource type="Theme" uid="uid://cgv6neoc7e3eg" path="res://Themes/UserCreation.tres" id="1_cnhyf"]
+[ext_resource type="Script" uid="uid://db6tesvbyblws" path="res://user_creation.gd" id="1_jw23x"]
+[ext_resource type="Texture2D" uid="uid://gm6p7dar0et2" path="res://icon.svg" id="2_oba1q"]
+[ext_resource type="Script" uid="uid://s5blcsvopd4a" path="res://pfp_drop_zone.gd" id="4_jw23x"]
+
+[sub_resource type="Theme" id="Theme_jw23x"]
+Button/font_sizes/font_size = 16
+Label/font_sizes/font_size = 16
+LineEdit/font_sizes/font_size = 16
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -7,3 +17,108 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jw23x")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 0
+offset_right = 3840.0
+offset_bottom = 2160.0
+theme = ExtResource("1_cnhyf")
+theme_override_constants/tab_separation = 20
+theme_override_constants/outline_size = 5
+current_tab = 0
+
+[node name="Individual" type="HBoxContainer" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="LeftSide" type="VBoxContainer" parent="TabContainer/Individual"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="LineEdit" parent="TabContainer/Individual/LeftSide"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme = ExtResource("1_cnhyf")
+placeholder_text = "Name"
+
+[node name="Age" type="LineEdit" parent="TabContainer/Individual/LeftSide"]
+layout_mode = 2
+
+[node name="RightSide" type="VBoxContainer" parent="TabContainer/Individual"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UploadButton" type="Button" parent="TabContainer/Individual/RightSide"]
+layout_mode = 2
+text = "Upload Image"
+
+[node name="PfpDialog" type="FileDialog" parent="TabContainer/Individual/RightSide"]
+oversampling_override = 1.0
+title = "Open a File"
+size = Vector2i(1920, 1080)
+content_scale_mode = 2
+content_scale_factor = 2.55
+theme = SubResource("Theme_jw23x")
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png", "*.jpg", "*.jpeg", "*.webp")
+
+[node name="PfpDropZone" type="TextureRect" parent="TabContainer/Individual/RightSide"]
+z_index = 10
+custom_minimum_size = Vector2(750, 750)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 7
+texture = ExtResource("2_oba1q")
+stretch_mode = 5
+script = ExtResource("4_jw23x")
+
+[node name="Save User" type="Button" parent="TabContainer/Individual/RightSide"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Save User"
+
+[node name="Parent" type="HBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Parent"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Parent/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "Work In Progress"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Parent"]
+layout_mode = 2
+
+[node name="Child" type="HBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Child"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Child/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "Work In Progress"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Child"]
+layout_mode = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ErrorPopup" type="AcceptDialog" parent="CanvasLayer"]
+oversampling_override = 1.0
+size = Vector2i(160, 295)
+theme = ExtResource("1_cnhyf")
+
+[connection signal="pressed" from="TabContainer/Individual/RightSide/Save User" to="." method="_on_save_user_pressed"]

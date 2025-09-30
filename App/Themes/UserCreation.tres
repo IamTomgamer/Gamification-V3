@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cgv6neoc7e3eg"]
+
+[ext_resource type="StyleBox" uid="uid://ceeomnpirxgj7" path="res://Themes/UserCreation/Tab_Unselected.tres" id="1_bh6w6"]
+[ext_resource type="StyleBox" uid="uid://ptj7bs33lp7q" path="res://Themes/UserCreation/Tab_Selected.tres" id="2_jv23e"]
+
+[resource]
+AcceptDialog/font_sizes/title_font_size = 50
+Button/font_sizes/font_size = 90
+Label/font_sizes/font_size = 100
+LineEdit/font_sizes/font_size = 100
+TabContainer/font_sizes/font_size = 130
+TabContainer/styles/tab_hovered = ExtResource("1_bh6w6")
+TabContainer/styles/tab_selected = ExtResource("2_jv23e")
+TabContainer/styles/tab_unselected = ExtResource("1_bh6w6")
