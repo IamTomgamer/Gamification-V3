@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cp3rmpurfhons"
-path="res://.godot/imported/2025_09_20_cultist-of-the-void-23537250.png-c75ae9d574b2f61f5e47dead4d43b6ad.ctex"
+uid="uid://dmsmel3whhgfw"
+path="res://.godot/imported/Home.webp-48af73713201c8f4521e182760ef8e09.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://2025_09_20_cultist-of-the-void-23537250.png"
-dest_files=["res://.godot/imported/2025_09_20_cultist-of-the-void-23537250.png-c75ae9d574b2f61f5e47dead4d43b6ad.ctex"]
+source_file="res://Textures/Icons/Home.webp"
+dest_files=["res://.godot/imported/Home.webp-48af73713201c8f4521e182760ef8e09.ctex"]
 
 [params]
 

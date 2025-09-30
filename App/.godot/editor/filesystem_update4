@@ -9,3 +9,6 @@ res://pfp_drop_zone.gd
 res://UserCard.tscn
 res://Themes/UserCard1.tres
 res://Themes/ImagePressed.tres
+res://IndependantUser.tscn
+res://independant_user.gd
+res://Themes/Users.tres
