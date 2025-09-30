@@ -1,14 +1,14 @@
+Label
+VBoxContainer
+ScrollContainer
 Button
 HBoxContainer
 LineEdit
 TextureButton
-VBoxContainer
 ColorRect
 NinePatchRect
 FileDialog
 TextureRect
 AcceptDialog
 CanvasLayer
-Label
 TabContainer
-TabBar

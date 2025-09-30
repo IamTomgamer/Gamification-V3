@@ -48,6 +48,12 @@ layout_mode = 2
 theme = ExtResource("2_vh4iu")
 text = "Add Task"
 
+[node name="Tasks" type="ScrollContainer" parent="Tasks_Rewards/Tasks"]
+layout_mode = 2
+
+[node name="Tasks" type="VBoxContainer" parent="Tasks_Rewards/Tasks/Tasks"]
+layout_mode = 2
+
 [node name="Rewards" type="VBoxContainer" parent="Tasks_Rewards"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -75,13 +81,21 @@ layout_mode = 2
 theme = ExtResource("2_vh4iu")
 text = "Add Reward"
 
+[node name="Rewards" type="ScrollContainer" parent="Tasks_Rewards/Rewards"]
+layout_mode = 2
+
+[node name="Rewards" type="VBoxContainer" parent="Tasks_Rewards/Rewards/Rewards"]
+layout_mode = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 3840.0
-offset_bottom = 256.0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 3790.0
+offset_bottom = 250.0
 
 [node name="Home" type="TextureButton" parent="HBoxContainer"]
-custom_minimum_size = Vector2(256, 256)
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 2
 action_mode = 0
@@ -91,5 +105,11 @@ texture_hover = ExtResource("1_e0kmr")
 texture_focused = ExtResource("1_e0kmr")
 ignore_texture_size = true
 stretch_mode = 5
+
+[node name="PointCount" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 100
+text = "Points"
 
 [connection signal="pressed" from="HBoxContainer/Home" to="." method="_on_home_pressed"]

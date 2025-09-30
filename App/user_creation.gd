@@ -81,12 +81,33 @@ func _on_user_folder_created(user_name: String, user_path: String):
 	_move_pfp_to_user_folder(user_path)
 	get_tree().change_scene_to_file("res://User Select.tscn")
 
+
+
+func update_user_points(folder_name: String, new_points: int):
+	var info_path = "user://users/" + folder_name + "/info.json"
+	if FileAccess.file_exists(info_path):
+		var file = FileAccess.open(info_path, FileAccess.READ)
+		var info = JSON.parse_string(file.get_as_text())
+		file.close()
+
+		if typeof(info) == TYPE_DICTIONARY:
+			info["points"] = new_points
+			var save_file = FileAccess.open(info_path, FileAccess.WRITE)
+			save_file.store_string(JSON.stringify(info, "\t"))
+			save_file.close()
+			print("Updated points for", folder_name, "to", new_points)
+		else:
+			print("Invalid info.json format")
+	else:
+		print("info.json not found for", folder_name)
+
 # Create user data files
 func _create_user_files(user_name: String, age: String, user_path: String):
 	var info = {
 		"name": user_name,
 		"age": age,
-		"role": "Independant"
+		"role": "Independant",
+		"points": 0
 	}
 	var info_file = FileAccess.open(user_path + "/info.json", FileAccess.WRITE)
 	if info_file:

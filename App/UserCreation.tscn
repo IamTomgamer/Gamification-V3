@@ -74,7 +74,6 @@ size_flags_vertical = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 7
 texture = ExtResource("2_oba1q")
-stretch_mode = 5
 script = ExtResource("4_jw23x")
 
 [node name="Save User" type="Button" parent="TabContainer/Individual/RightSide"]

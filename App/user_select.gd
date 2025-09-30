@@ -60,10 +60,10 @@ func _on_user_selected(folder_name: String):
 			file.close()
 
 			if typeof(info) == TYPE_DICTIONARY:
-				var name = info.get("name", "Unknown")
+				var username = info.get("name", "Unknown")
 				var age = info.get("age", "Unknown")
 				var role = info.get("role", "Unknown")
-				print("Selected user:", name, " Age:", age, " Role:", role)
+				print("Selected user:", username, " Age:", age, " Role:", role)
 				if role == "Independant":
 					get_tree().change_scene_to_file("res://IndependantUser.tscn")
 				elif role == "Child":
@@ -78,6 +78,8 @@ func _on_user_selected(folder_name: String):
 			print("Failed to open", info_path)
 	else:
 		print("info.json not found for user:", folder_name)
+	UserState.current_user = folder_name
+	print(UserState.current_user, " is selected")
 
 
 

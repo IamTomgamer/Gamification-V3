@@ -1,18 +1,21 @@
 [gd_scene load_steps=4 format=3 uid="uid://c7xghepq5xk2j"]
 
-[ext_resource type="Texture2D" uid="uid://cnrr2pp6dlcts" path="res://Users/Photos/Tom.jpeg" id="1_rlrma"]
+[ext_resource type="Texture2D" uid="uid://bwwxig0ujligu" path="res://Users/MHNL.jpeg" id="1_la8gt"]
 [ext_resource type="Theme" uid="uid://8skpxi5tp1yj" path="res://Themes/UserCard1.tres" id="2_bn6t7"]
 [ext_resource type="Theme" uid="uid://dgkufcixb7m6d" path="res://Themes/UserCard.tres" id="2_la8gt"]
 
 [node name="VBoxContainer" type="VBoxContainer"]
+clip_contents = true
 offset_right = 893.0
 offset_bottom = 1042.0
 
 [node name="ProfileImage" type="TextureRect" parent="."]
+clip_contents = true
 custom_minimum_size = Vector2(1000, 1000)
 layout_mode = 2
-texture = ExtResource("1_rlrma")
-expand_mode = 5
+texture = ExtResource("1_la8gt")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="ImageButton" type="Button" parent="ProfileImage"]
 layout_mode = 0
