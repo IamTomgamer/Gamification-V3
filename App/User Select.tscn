@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://b055nhytts367"]
+
+[ext_resource type="Script" uid="uid://ycq353xd8d0t" path="res://user_select.gd" id="1_4w36s"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4w36s")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1290.0
+offset_top = 356.0
+offset_right = 2540.0
+offset_bottom = 631.0
+pivot_offset = Vector2(625, 0)
+theme_override_font_sizes/font_size = 200
+text = "Gamification"
+
+[node name="Title2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1652.0
+offset_top = 577.0
+offset_right = 2197.0
+offset_bottom = 683.0
+pivot_offset = Vector2(272.5, 0)
+theme_override_font_sizes/font_size = 77
+text = "By Tom Helder"
+
+[node name="UserScroll" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 828.0
+offset_right = 3740.0
+offset_bottom = 2060.0
+
+[node name="UserList" type="HBoxContainer" parent="UserScroll"]
+layout_mode = 2
+alignment = 1
