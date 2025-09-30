@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://cqdlxqfhr08qc"]
+
+[ext_resource type="Texture2D" uid="uid://bfxl0kk7ysprr" path="res://Textures/Icons/trashwhite.png" id="1_mcbcl"]
+[ext_resource type="Texture2D" uid="uid://b5vhnrxr5ug1y" path="res://Textures/Icons/trashdark.png" id="2_juw80"]
+[ext_resource type="Texture2D" uid="uid://bpunk03eutvnp" path="res://Textures/Icons/trashlightgrey.png" id="3_svr0a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pnapv"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.15686275, 0.15686275, 0.15686275, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f4tvw"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3ay6"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+
+[sub_resource type="Theme" id="Theme_tu8fj"]
+Button/font_sizes/font_size = 75
+Button/styles/hover = SubResource("StyleBoxFlat_pnapv")
+Button/styles/normal = SubResource("StyleBoxFlat_f4tvw")
+Button/styles/pressed = SubResource("StyleBoxFlat_v3ay6")
+
+[node name="HBoxContainer" type="HBoxContainer"]
+offset_right = 1500.0
+offset_bottom = 256.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RewardButton" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_tu8fj")
+theme_override_constants/line_spacing = 5
+text = "Rewardname
+Cost"
+alignment = 0
+
+[node name="DeleteButton" type="TextureButton" parent="."]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("1_mcbcl")
+texture_pressed = ExtResource("2_juw80")
+texture_hover = ExtResource("3_svr0a")
+texture_disabled = ExtResource("1_mcbcl")
+texture_focused = ExtResource("1_mcbcl")

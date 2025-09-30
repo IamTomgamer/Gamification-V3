@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://4k582h7cxx8v" path="res://independant_user.gd" id="1_0urfq"]
 [ext_resource type="Texture2D" uid="uid://dmsmel3whhgfw" path="res://Textures/Icons/Home.webp" id="1_e0kmr"]
-[ext_resource type="Theme" uid="uid://0l4cccn1psog" path="res://Themes/Users.tres" id="2_vh4iu"]
+[ext_resource type="Theme" uid="uid://bjnrclusr2ax4" path="res://Themes/taskrewardbuttons.tres" id="2_vh4iu"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -49,10 +49,15 @@ theme = ExtResource("2_vh4iu")
 text = "Add Task"
 
 [node name="Tasks" type="ScrollContainer" parent="Tasks_Rewards/Tasks"]
+custom_minimum_size = Vector2(0, 1550)
 layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 3
 
 [node name="Tasks" type="VBoxContainer" parent="Tasks_Rewards/Tasks/Tasks"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Rewards" type="VBoxContainer" parent="Tasks_Rewards"]
 layout_mode = 2
@@ -82,10 +87,15 @@ theme = ExtResource("2_vh4iu")
 text = "Add Reward"
 
 [node name="Rewards" type="ScrollContainer" parent="Tasks_Rewards/Rewards"]
+custom_minimum_size = Vector2(0, 1550)
 layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 3
 
 [node name="Rewards" type="VBoxContainer" parent="Tasks_Rewards/Rewards/Rewards"]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
@@ -110,6 +120,6 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 2
 theme_override_font_sizes/font_size = 100
-text = "Points"
+text = "Points: 0"
 
 [connection signal="pressed" from="HBoxContainer/Home" to="." method="_on_home_pressed"]

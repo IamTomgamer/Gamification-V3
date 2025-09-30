@@ -13,3 +13,5 @@ res://IndependantUser.tscn
 res://independant_user.gd
 res://Themes/Users.tres
 res://Userstate.gd
+res://Tasks.tscn
+res://Rewards.tscn
