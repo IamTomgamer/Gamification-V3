@@ -40,4 +40,5 @@ offset_bottom = 2060.0
 
 [node name="UserList" type="HBoxContainer" parent="UserScroll"]
 layout_mode = 2
+theme_override_constants/separation = 100
 alignment = 1

@@ -117,6 +117,8 @@ func load_tasks():
 		if typeof(task) == TYPE_DICTIONARY:
 			populate_tasks(task)
 
+
+
 # ✅ Load and sort rewards
 func load_rewards():
 	if not FileAccess.file_exists(reward_path):
@@ -172,7 +174,7 @@ func populate_rewards(reward: Dictionary):
 	var cost = reward.get("cost", 0)
 
 	var button = row.get_node("RewardButton")
-	button.text = "%s\nPoints: %s" % [rewardname, str(cost)]
+	button.text = "%s\nCost: %s" % [rewardname, str(cost)]
 
 	var user_points = get_user_points()
 	button.disabled = cost > user_points
@@ -197,7 +199,7 @@ func refresh_rewards():
 		var button = row.get_node_or_null("RewardButton")
 		if button:
 			var label_text = button.text
-			var parts = label_text.split("\nPoints: ")
+			var parts = label_text.split("\nCost: ")
 			if parts.size() == 2:
 				var cost = int(parts[1])
 				button.disabled = cost > user_points

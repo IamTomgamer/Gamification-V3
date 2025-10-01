@@ -27,6 +27,9 @@ extends Control
 var child_users: Array = []
 var current_child_index: int = 0
 
+func activate_reward_deletion():
+	pass
+
 func _ready():
 	load_child_users()  # this now handles setting the child and loading data
 	left_button.pressed.connect(switch_child_left)
@@ -34,6 +37,7 @@ func _ready():
 	add_task_button.pressed.connect(add_task_from_input)
 	add_reward_button.pressed.connect(add_reward_from_input)
 	refresh_points()
+	activate_reward_deletion()
 
 
 func load_child_users():
@@ -46,9 +50,9 @@ func load_child_users():
 	var filename = dir.get_next()
 	while filename != "":
 		if dir.current_is_dir():
-			var info_path = "user://users/" + filename + "/info.json"
-			if FileAccess.file_exists(info_path):
-				var file = FileAccess.open(info_path, FileAccess.READ)
+			var infopath = "user://users/" + filename + "/info.json"
+			if FileAccess.file_exists(infopath):
+				var file = FileAccess.open(infopath, FileAccess.READ)
 				var info = JSON.parse_string(file.get_as_text())
 				file.close()
 				if typeof(info) == TYPE_DICTIONARY and info.get("role", "") == "Child":
@@ -59,8 +63,13 @@ func load_child_users():
 	if child_users.size() > 0:
 		current_child_index = 0
 		UserState.current_child = child_users[current_child_index]
+		refresh_points()
 		update_child_display()
 	update_child_display()  # this sets the child and loads tasks/rewards
+
+@onready var name_label = $Tasks_Rewards/VBoxContainer2/VBoxContainer/VBoxContainer/ChildName
+@onready var age_label = $Tasks_Rewards/VBoxContainer2/VBoxContainer/VBoxContainer/Age
+
 
 func update_child_display():
 	if child_users.size() == 0:
@@ -69,6 +78,7 @@ func update_child_display():
 
 	var child_name = child_users[current_child_index]
 	UserState.current_child = child_name
+	refresh_points()
 
 	var photo_path = "user://users/" + child_name + "/pfp.png"
 	if FileAccess.file_exists(photo_path):
@@ -85,6 +95,20 @@ func update_child_display():
 	selected_child = child_name
 	task_path = "user://users/" + selected_child + "/Tasks.json"
 	reward_path = "user://users/" + selected_child + "/Rewards.json"
+	# Update name and age labels
+	var info__path = "user://users/" + UserState.current_child + "/info.json"
+	if FileAccess.file_exists(info__path):
+		var file = FileAccess.open(info__path, FileAccess.READ)
+		var info = JSON.parse_string(file.get_as_text())
+		file.close()
+
+		if typeof(info) == TYPE_DICTIONARY:
+			name_label.text = str(info.get("name", "Unknown"))
+			age_label.text = str(info.get("age", "N/A")) + " y/o"
+	else:
+		name_label.text = "Name: Unknown"
+		age_label.text = "Age: N/A"
+
 	refresh_tasks()
 	refresh_rewards_list()
 
@@ -238,6 +262,19 @@ func populate_rewards(reward: Dictionary):
 	var row = reward_button.instantiate()
 	var rewardname = reward.get("name", "Unnamed Reward")
 	var cost = reward.get("cost", 0)
+	var info_path = "user://users/" + UserState.current_user + "/info.json"
+	if FileAccess.file_exists(info_path):
+		var file = FileAccess.open(info_path, FileAccess.READ)
+		var info = JSON.parse_string(file.get_as_text())
+		file.close()
+
+		if typeof(info) == TYPE_DICTIONARY and info.get("role", "") == "Parent":
+			var target_node = row.get_node("ParentOnlyNode")
+			if target_node:
+				target_node.visible = true
+			else:
+				pass
+
 
 	var button = row.get_node("RewardButton")
 	button.text = "%s\nPoints: %s" % [rewardname, str(cost)]
@@ -279,18 +316,24 @@ func refresh_rewards_list():
 		child.queue_free()
 	load_rewards()
 
+func get_child_info_path() -> String:
+	return "user://users/" + UserState.current_child + "/info.json"
+
 func get_user_points() -> int:
-	if FileAccess.file_exists(info_path):
-		var file = FileAccess.open(info_path, FileAccess.READ)
+	var path = get_child_info_path()
+	if FileAccess.file_exists(path):
+		var file = FileAccess.open(path, FileAccess.READ)
 		var info = JSON.parse_string(file.get_as_text())
 		file.close()
 		if typeof(info) == TYPE_DICTIONARY:
 			return int(info.get("points", 0))
 	return 0
 
+
+
 func refresh_points():
 	var points = get_user_points()
-	$HBoxContainer/PointCount.text = "points: " + str(points)
+	$Tasks_Rewards/VBoxContainer2/VBoxContainer/VBoxContainer/PointCount.text = "points: " + str(points)
 
 func add_user_points(pointcount: int):
 	var info = {}
