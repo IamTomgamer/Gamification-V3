@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bqdcqcnpg48fa"]
+[gd_scene load_steps=9 format=3 uid="uid://bqdcqcnpg48fa"]
 
 [ext_resource type="Theme" uid="uid://cgv6neoc7e3eg" path="res://Themes/UserCreation.tres" id="1_cnhyf"]
 [ext_resource type="Script" uid="uid://db6tesvbyblws" path="res://user_creation.gd" id="1_jw23x"]
 [ext_resource type="Texture2D" uid="uid://dmsmel3whhgfw" path="res://Textures/Icons/Home.webp" id="3_b6hwb"]
 [ext_resource type="Script" uid="uid://s5blcsvopd4a" path="res://pfp_drop_zone.gd" id="4_jw23x"]
 [ext_resource type="Script" uid="uid://b23eddxe46one" path="res://parent.gd" id="5_b6hwb"]
+[ext_resource type="Script" uid="uid://dwjws8j8r4ehd" path="res://child.gd" id="6_shj1a"]
 
 [sub_resource type="Theme" id="Theme_jw23x"]
 Button/font_sizes/font_size = 16
@@ -31,7 +32,7 @@ offset_bottom = 2160.0
 theme = ExtResource("1_cnhyf")
 theme_override_constants/tab_separation = 20
 theme_override_constants/outline_size = 5
-current_tab = 2
+current_tab = 3
 
 [node name="Home" type="Button" parent="TabContainer"]
 visible = false
@@ -96,6 +97,7 @@ size_flags_vertical = 10
 text = "Save User"
 
 [node name="Parent" type="HBoxContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("5_b6hwb")
 metadata/_tab_index = 2
@@ -170,24 +172,58 @@ size_flags_vertical = 10
 text = "Save User"
 
 [node name="Child" type="HBoxContainer" parent="TabContainer"]
-visible = false
 layout_mode = 2
+script = ExtResource("6_shj1a")
 metadata/_tab_index = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Child"]
+[node name="LeftSide" type="VBoxContainer" parent="TabContainer/Child"]
 layout_mode = 2
-tooltip_text = "Work In Progress"
+size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="TabContainer/Child/VBoxContainer2"]
+[node name="Name" type="LineEdit" parent="TabContainer/Child/LeftSide"]
 layout_mode = 2
-tooltip_text = "Work In Progress"
-mouse_filter = 1
-theme_override_font_sizes/font_size = 100
-text = "Work In Progress"
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme = ExtResource("1_cnhyf")
+placeholder_text = "Name"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Child"]
+[node name="Age" type="LineEdit" parent="TabContainer/Child/LeftSide"]
 layout_mode = 2
-tooltip_text = "Work In Progress"
+placeholder_text = "Age"
+
+[node name="RightSide" type="VBoxContainer" parent="TabContainer/Child"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UploadButton" type="Button" parent="TabContainer/Child/RightSide"]
+layout_mode = 2
+text = "Choose your Profile Picture"
+
+[node name="PfpDialog" type="FileDialog" parent="TabContainer/Child/RightSide"]
+oversampling_override = 1.0
+title = "Open a File"
+size = Vector2i(1920, 1080)
+content_scale_mode = 2
+content_scale_factor = 2.55
+theme = SubResource("Theme_jw23x")
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png", "*.jpg", "*.jpeg", "*.webp")
+
+[node name="PfpDropZone" type="TextureRect" parent="TabContainer/Child/RightSide"]
+z_index = 10
+custom_minimum_size = Vector2(750, 750)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 7
+script = ExtResource("4_jw23x")
+
+[node name="Save User" type="Button" parent="TabContainer/Child/RightSide"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Save User"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
