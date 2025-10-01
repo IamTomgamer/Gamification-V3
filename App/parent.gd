@@ -8,7 +8,7 @@ extends Control
 @onready var age_field = $LeftSide/Age
 @onready var create_button = $"RightSide/Save User"
 
-
+@onready var ownrewardsq = $LeftSide/HBoxContainer/OptionButton
 
 
 
@@ -59,7 +59,7 @@ func _on_pfp_selected(path: String):
 func _ready():
 
 	pfp_dialog.file_selected.connect(_on_pfp_selected)
-
+	$LeftSide/HBoxContainer/OptionButton.get_popup().add_theme_font_size_override("font_size", 60)
 	print("UserCreation ready. Waiting for file drop...")
 
 
@@ -97,13 +97,13 @@ func update_user_points(folder_name: String, new_points: int):
 		print("info.json not found for", folder_name)
 
 # Create user data files
-func _create_user_files(user_name: String, age: String, user_path: String):
+func _create_user_files(user_name: String, age: String, user_path: String, ownrewardsyn: String):
 	var info = {
 		"name": user_name,
 		"age": age,
 		"role": "Parent",
-		"points": 0
-	}
+		"points": 0,
+		"own rewards?": ownrewardsyn}
 	var info_file = FileAccess.open(user_path + "/info.json", FileAccess.WRITE)
 	if info_file:
 		info_file.store_string(JSON.stringify(info, "\t"))
@@ -111,13 +111,7 @@ func _create_user_files(user_name: String, age: String, user_path: String):
 	else:
 		print("Failed to create info.json")
 
-	var tasks_file = FileAccess.open(user_path + "/Tasks.json", FileAccess.WRITE)
-	if tasks_file:
-		tasks_file.store_string(JSON.stringify([], "\t"))
-		tasks_file.close()
-	else:
-		print("Failed to create Tasks.json")
-
+	
 	var rewards_file = FileAccess.open(user_path + "/Rewards.json", FileAccess.WRITE)
 	if rewards_file:
 		rewards_file.store_string(JSON.stringify([], "\t"))
@@ -147,6 +141,8 @@ func _move_pfp_to_user_folder(user_path: String):
 func _on_save_user_pressed():
 	var user_name = name_field.text.strip_edges()
 	var user_age = age_field.text.strip_edges()
+	var ownrewardsynchoice = ownrewardsq.get_item_text(ownrewardsq.selected)
+
 
 	if user_name == "":
 		Global.show_error("Name is empty. Cannot create folder.", $"../../CanvasLayer/ErrorPopup")
@@ -154,6 +150,7 @@ func _on_save_user_pressed():
 
 	var base_path = "user://users"
 	var user_path = base_path + "/" + user_name
+
 
 	if not DirAccess.dir_exists_absolute(base_path):
 		var base_err = DirAccess.make_dir_absolute(base_path)
@@ -166,11 +163,14 @@ func _on_save_user_pressed():
 	else:
 		var err = DirAccess.make_dir_absolute(user_path)
 		if err == OK:
-			_create_user_files(user_name, user_age, user_path)
+			_create_user_files(user_name, user_age, user_path, ownrewardsynchoice)
 			_on_user_folder_created(user_name, user_path)
 		else:
 			Global.show_error("Could not create user folder.", $"../../CanvasLayer/ErrorPopup")
-
+	if ownrewardsq.get_item_text(ownrewardsq.selected) == "Yes":
+		print("You chose Yes")
+	else:
+		print("You chose No")
 
 func _on_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://User Select.tscn")

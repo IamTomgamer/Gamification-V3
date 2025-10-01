@@ -20,14 +20,86 @@ extends Control
 @onready var reward_cost_input = $Tasks_Rewards/TasksAndRewards/Rewards/Price_AddReward/Price
 @onready var add_reward_button = $Tasks_Rewards/TasksAndRewards/Rewards/Price_AddReward/AddReward
 
+@onready var left_button = $Tasks_Rewards/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer/LeftButton
+@onready var right_button = $Tasks_Rewards/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer2/RightButton
+@onready var child_photo = $Tasks_Rewards/VBoxContainer2/VBoxContainer/HBoxContainer/ChildPhoto
+
+var child_users: Array = []
+var current_child_index: int = 0
+
 func _ready():
-	refresh_points()
-	load_tasks()
-	load_rewards()
+	load_child_users()  # this now handles setting the child and loading data
+	left_button.pressed.connect(switch_child_left)
+	right_button.pressed.connect(switch_child_right)
 	add_task_button.pressed.connect(add_task_from_input)
 	add_reward_button.pressed.connect(add_reward_from_input)
+	refresh_points()
 
-# ✅ Add task from input fields
+
+func load_child_users():
+	var dir = DirAccess.open("user://users")
+	if dir == null:
+		print("Failed to open user directory")
+		return
+
+	dir.list_dir_begin()
+	var filename = dir.get_next()
+	while filename != "":
+		if dir.current_is_dir():
+			var info_path = "user://users/" + filename + "/info.json"
+			if FileAccess.file_exists(info_path):
+				var file = FileAccess.open(info_path, FileAccess.READ)
+				var info = JSON.parse_string(file.get_as_text())
+				file.close()
+				if typeof(info) == TYPE_DICTIONARY and info.get("role", "") == "Child":
+					child_users.append(filename)
+		filename = dir.get_next()
+	dir.list_dir_end()
+
+	if child_users.size() > 0:
+		current_child_index = 0
+		UserState.current_child = child_users[current_child_index]
+		update_child_display()
+	update_child_display()  # this sets the child and loads tasks/rewards
+
+func update_child_display():
+	if child_users.size() == 0:
+		child_photo.texture = null
+		return
+
+	var child_name = child_users[current_child_index]
+	UserState.current_child = child_name
+
+	var photo_path = "user://users/" + child_name + "/pfp.png"
+	if FileAccess.file_exists(photo_path):
+		var image = Image.new()
+		var err = image.load(photo_path)
+		if err == OK:
+			var texture = ImageTexture.create_from_image(image)
+			child_photo.texture = texture
+		else:
+			print("Failed to load image for", child_name)
+	else:
+		child_photo.texture = null
+
+	selected_child = child_name
+	task_path = "user://users/" + selected_child + "/Tasks.json"
+	reward_path = "user://users/" + selected_child + "/Rewards.json"
+	refresh_tasks()
+	refresh_rewards_list()
+
+func switch_child_left():
+	if child_users.size() == 0:
+		return
+	current_child_index = (current_child_index - 1 + child_users.size()) % child_users.size()
+	update_child_display()
+
+func switch_child_right():
+	if child_users.size() == 0:
+		return
+	current_child_index = (current_child_index + 1) % child_users.size()
+	update_child_display()
+
 func add_task_from_input():
 	var taskname = task_name_input.text.strip_edges()
 	var points_text = task_points_input.text.strip_edges()
@@ -63,7 +135,6 @@ func add_task_from_input():
 	task_points_input.text = ""
 	refresh_tasks()
 
-# ✅ Add reward from input fields
 func add_reward_from_input():
 	var rewardname = reward_name_input.text.strip_edges()
 	var cost_text = reward_cost_input.text.strip_edges()
@@ -99,10 +170,9 @@ func add_reward_from_input():
 	reward_cost_input.text = ""
 	refresh_rewards_list()
 
-# ✅ Load and sort tasks
 func load_tasks():
 	if not FileAccess.file_exists(task_path):
-		print("No tasks.json found for ", folder_name)
+		print("No tasks.json found for ", selected_child)
 		return
 
 	var file = FileAccess.open(task_path, FileAccess.READ)
@@ -119,10 +189,9 @@ func load_tasks():
 		if typeof(task) == TYPE_DICTIONARY:
 			populate_tasks(task)
 
-# ✅ Load and sort rewards
 func load_rewards():
 	if not FileAccess.file_exists(reward_path):
-		print("No rewards.json found for ", folder_name)
+		print("No rewards.json found for ", selected_child)
 		return
 
 	var file = FileAccess.open(reward_path, FileAccess.READ)
@@ -139,14 +208,12 @@ func load_rewards():
 		if typeof(reward) == TYPE_DICTIONARY:
 			populate_rewards(reward)
 
-# ✅ Sorting functions
 func compare_tasks(a, b) -> bool:
-	return int(a.get("points", 0)) < int(b.get("points", 0))  # ascending
+	return int(a.get("points", 0)) < int(b.get("points", 0))
 
 func compare_rewards(a, b) -> bool:
-	return int(a.get("cost", 0)) < int(b.get("cost", 0))  # ascending
+	return int(a.get("cost", 0)) < int(b.get("cost", 0))
 
-# ✅ Populate task row
 func populate_tasks(task: Dictionary):
 	var row = task_button.instantiate()
 	var taskname = task.get("name", "Unnamed Task")
@@ -167,7 +234,6 @@ func populate_tasks(task: Dictionary):
 
 	task_list.add_child(row)
 
-# ✅ Populate reward row
 func populate_rewards(reward: Dictionary):
 	var row = reward_button.instantiate()
 	var rewardname = reward.get("name", "Unnamed Reward")
@@ -191,7 +257,6 @@ func populate_rewards(reward: Dictionary):
 
 	reward_list.add_child(row)
 
-# ✅ Refresh reward buttons based on current points
 func refresh_rewards():
 	var user_points = get_user_points()
 
@@ -204,19 +269,16 @@ func refresh_rewards():
 				var cost = int(parts[1])
 				button.disabled = cost > user_points
 
-# ✅ Refresh task list
 func refresh_tasks():
 	for child in task_list.get_children():
 		child.queue_free()
 	load_tasks()
 
-# ✅ Refresh reward list
 func refresh_rewards_list():
 	for child in reward_list.get_children():
 		child.queue_free()
 	load_rewards()
 
-# ✅ Get current user points
 func get_user_points() -> int:
 	if FileAccess.file_exists(info_path):
 		var file = FileAccess.open(info_path, FileAccess.READ)
@@ -226,12 +288,10 @@ func get_user_points() -> int:
 			return int(info.get("points", 0))
 	return 0
 
-# ✅ Refresh points label
 func refresh_points():
 	var points = get_user_points()
 	$HBoxContainer/PointCount.text = "points: " + str(points)
 
-# ✅ Add points
 func add_user_points(pointcount: int):
 	var info = {}
 	if FileAccess.file_exists(info_path):
@@ -251,7 +311,6 @@ func add_user_points(pointcount: int):
 
 	print("Added", pointcount, "points to", folder_name)
 
-# ✅ Subtract points
 func take_user_points(pointcount: int):
 	var info = {}
 	if FileAccess.file_exists(info_path):
@@ -271,7 +330,6 @@ func take_user_points(pointcount: int):
 
 	print("Took", pointcount, "points from", folder_name)
 
-# ✅ Delete task (continued)
 func delete_task_from_json(taskname: String):
 	if not FileAccess.file_exists(task_path):
 		return
@@ -295,7 +353,6 @@ func delete_task_from_json(taskname: String):
 	print("Deleted task:", taskname)
 	refresh_tasks()
 
-# ✅ Delete reward
 func delete_reward_from_json(rewardname: String):
 	if not FileAccess.file_exists(reward_path):
 		return
@@ -319,20 +376,17 @@ func delete_reward_from_json(rewardname: String):
 	print("Deleted reward:", rewardname)
 	refresh_rewards_list()
 
-# ✅ Task button pressed
 func on_task_pressed(taskname: String, points: int):
 	print("Task pressed:", taskname, "worth", points, "points")
 	add_user_points(points)
 	refresh_points()
 	refresh_rewards()
 
-# ✅ Reward button pressed
 func on_reward_pressed(rewardname: String, cost: int):
 	print("Reward pressed:", rewardname, "costs", cost, "points")
 	take_user_points(cost)
 	refresh_points()
 	refresh_rewards()
 
-# ✅ Home button
 func _on_home_pressed():
 	get_tree().change_scene_to_file("res://User Select.tscn")

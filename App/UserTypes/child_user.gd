@@ -23,8 +23,7 @@ func _ready():
 	refresh_points()
 	load_tasks()
 	load_rewards()
-	add_task_button.pressed.connect(add_task_from_input)
-	add_reward_button.pressed.connect(add_reward_from_input)
+
 
 # ✅ Add task from input fields
 func add_task_from_input():

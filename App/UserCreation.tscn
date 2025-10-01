@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bqdcqcnpg48fa"]
+[gd_scene load_steps=8 format=3 uid="uid://bqdcqcnpg48fa"]
 
 [ext_resource type="Theme" uid="uid://cgv6neoc7e3eg" path="res://Themes/UserCreation.tres" id="1_cnhyf"]
 [ext_resource type="Script" uid="uid://db6tesvbyblws" path="res://user_creation.gd" id="1_jw23x"]
@@ -10,6 +10,10 @@
 Button/font_sizes/font_size = 16
 Label/font_sizes/font_size = 16
 LineEdit/font_sizes/font_size = 16
+
+[sub_resource type="Theme" id="Theme_b6hwb"]
+OptionButton/font_sizes/font_size = 60
+PopupMenu/font_sizes/font_size = 60
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -27,7 +31,7 @@ offset_bottom = 2160.0
 theme = ExtResource("1_cnhyf")
 theme_override_constants/tab_separation = 20
 theme_override_constants/outline_size = 5
-current_tab = 1
+current_tab = 2
 
 [node name="Home" type="Button" parent="TabContainer"]
 visible = false
@@ -38,6 +42,7 @@ expand_icon = true
 metadata/_tab_index = 0
 
 [node name="Individual" type="HBoxContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -91,7 +96,6 @@ size_flags_vertical = 10
 text = "Save User"
 
 [node name="Parent" type="HBoxContainer" parent="TabContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("5_b6hwb")
 metadata/_tab_index = 2
@@ -110,6 +114,26 @@ placeholder_text = "Name"
 [node name="Age" type="LineEdit" parent="TabContainer/Parent/LeftSide"]
 layout_mode = 2
 placeholder_text = "Age"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Parent/LeftSide"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Parent/LeftSide/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 77
+text = "Would you like your own rewards?  "
+
+[node name="OptionButton" type="OptionButton" parent="TabContainer/Parent/LeftSide/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_b6hwb")
+theme_override_font_sizes/font_size = 100
+item_count = 2
+popup/item_0/text = "Yes"
+popup/item_0/id = 0
+popup/item_1/text = "No"
+popup/item_1/id = 1
 
 [node name="RightSide" type="VBoxContainer" parent="TabContainer/Parent"]
 layout_mode = 2
