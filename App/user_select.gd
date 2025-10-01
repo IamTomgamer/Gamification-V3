@@ -1,7 +1,9 @@
 extends Control
 
 @onready var user_list = $UserScroll/UserList
-
+@onready var independentuser = "res://UserTypes/IndependantUser.tscn"
+@onready var parentuser = "res://UserTypes/ParentUser.tscn"
+@onready var childuser = "res://UserTypes/ChildUser.tscn"
 func _ready():
 	populate_user_cards()
 
@@ -26,9 +28,15 @@ func populate_user_cards():
 						var card = preload("res://UserCard.tscn").instantiate()
 						var user_name = info_data.get("name", folder_name)
 						card.get_node("UserName").text = user_name
-						card.get_node("UserName").connect("pressed", Callable(self, "_on_user_selected").bind(folder_name))
+						card.get_node("UserName").connect(
+							"pressed", 
+							Callable(self, "_on_user_selected").bind(folder_name)
+							)
 
-						card.get_node("ProfileImage/ImageButton").connect("pressed", Callable(self, "_on_user_selected").bind(folder_name))
+						card.get_node("ProfileImage/ImageButton").connect(
+							"pressed", 
+							Callable(self, "_on_user_selected").bind(folder_name)
+							)
 
 
 						if FileAccess.file_exists(pfp_path):
@@ -45,9 +53,14 @@ func populate_user_cards():
 
 	# Add User card
 	var add_card = preload("res://UserCard.tscn").instantiate()
-	add_card.get_node("ProfileImage").texture = preload("res://Users/Photos/plus.png")
+	add_card.get_node("ProfileImage").texture = preload(
+		"res://Users/Photos/plus.png"
+		)
 	add_card.get_node("UserName").text = "Add User"
-	add_card.get_node("UserName").connect("pressed", Callable(self, "_on_add_user_pressed"))
+	add_card.get_node("UserName").connect(
+		"pressed", 
+		Callable(self, "_on_add_user_pressed")
+		)
 	user_list.add_child(add_card)
 
 func _on_user_selected(folder_name: String):
@@ -65,11 +78,11 @@ func _on_user_selected(folder_name: String):
 				var role = info.get("role", "Unknown")
 				print("Selected user:", username, " Age:", age, " Role:", role)
 				if role == "Independant":
-					get_tree().change_scene_to_file("res://IndependantUser.tscn")
+					get_tree().change_scene_to_file(independentuser)
 				elif role == "Child":
-					get_tree().change_scene_to_file("res://ChildUser.tscn")
+					get_tree().change_scene_to_file(childuser)
 				elif role == "Parent":
-					get_tree().change_scene_to_file("res://ParentUser.tscn")
+					get_tree().change_scene_to_file(parentuser)
 				# You can now use this data however you want
 				# For example: switch to dashboard, store user state, etc.
 			else:

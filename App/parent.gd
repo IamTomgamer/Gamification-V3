@@ -1,13 +1,12 @@
 extends Control
 
-@onready var pfp_dialog = $TabContainer/Individual/RightSide/PfpDialog
-@onready var upload_button = $TabContainer/Individual/RightSide/UploadButton
-@onready var pfp_zone = $TabContainer/Individual/RightSide/PfpDropZone
+@onready var pfp_dialog = $RightSide/PfpDialog
+@onready var upload_button = $RightSide/UploadButton
+@onready var pfp_zone = $RightSide/PfpDropZone
 
-
-@onready var name_field = $TabContainer/Individual/LeftSide/Name
-@onready var age_field = $TabContainer/Individual/LeftSide/Age
-@onready var create_button = $"TabContainer/Individual/RightSide/Save User"
+@onready var name_field = $LeftSide/Name
+@onready var age_field = $LeftSide/Age
+@onready var create_button = $"RightSide/Save User"
 
 
 
@@ -59,17 +58,17 @@ func _on_pfp_selected(path: String):
 
 func _ready():
 
-
 	pfp_dialog.file_selected.connect(_on_pfp_selected)
 
 	print("UserCreation ready. Waiting for file drop...")
+
 
 # Show error popup
 
 
 # Called if folder already exists
 func _on_user_folder_exists(user_name: String, _path: String):
-	Global.show_error("User '" + user_name + "' already exists.", $CanvasLayer/ErrorPopup)
+	Global.show_error("User '" + user_name + "' already exists.", $"../../CanvasLayer/ErrorPopup")
 
 # Called after folder is created
 func _on_user_folder_created(user_name: String, user_path: String):
@@ -102,7 +101,7 @@ func _create_user_files(user_name: String, age: String, user_path: String):
 	var info = {
 		"name": user_name,
 		"age": age,
-		"role": "Independant",
+		"role": "Parent",
 		"points": 0
 	}
 	var info_file = FileAccess.open(user_path + "/info.json", FileAccess.WRITE)
@@ -150,7 +149,7 @@ func _on_save_user_pressed():
 	var user_age = age_field.text.strip_edges()
 
 	if user_name == "":
-		Global.show_error("Name is empty. Cannot create folder.", $CanvasLayer/ErrorPopup)
+		Global.show_error("Name is empty. Cannot create folder.", $"../../CanvasLayer/ErrorPopup")
 		return
 
 	var base_path = "user://users"
@@ -159,7 +158,7 @@ func _on_save_user_pressed():
 	if not DirAccess.dir_exists_absolute(base_path):
 		var base_err = DirAccess.make_dir_absolute(base_path)
 		if base_err != OK:
-			Global.show_error("Could not create base folder.", $CanvasLayer/ErrorPopup)
+			Global.show_error("Could not create base folder.", $"../../CanvasLayer/ErrorPopup")
 			return
 
 	if DirAccess.dir_exists_absolute(user_path):
@@ -170,7 +169,7 @@ func _on_save_user_pressed():
 			_create_user_files(user_name, user_age, user_path)
 			_on_user_folder_created(user_name, user_path)
 		else:
-			Global.show_error("Could not create user folder.", $CanvasLayer/ErrorPopup)
+			Global.show_error("Could not create user folder.", $"../../CanvasLayer/ErrorPopup")
 
 
 func _on_button_pressed() -> void:

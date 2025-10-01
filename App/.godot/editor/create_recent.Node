@@ -1,9 +1,9 @@
+VBoxContainer
+HBoxContainer
 Button
 Label
 MarginContainer
 TextureButton
-HBoxContainer
-VBoxContainer
 ScrollContainer
 LineEdit
 ColorRect

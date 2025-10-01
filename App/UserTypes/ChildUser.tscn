@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3txpo0g60nq4"]
+
+[ext_resource type="Script" uid="uid://dyof602puxao8" path="res://UserTypes/child_user.gd" id="1_qe0u1"]
+[ext_resource type="Texture2D" uid="uid://dmsmel3whhgfw" path="res://Textures/Icons/Home.webp" id="3_2df7o"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qe0u1")
+
+[node name="Tasks_Rewards" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 316.0
+offset_right = 3790.0
+offset_bottom = 2216.0
+theme_override_constants/separation = 50
+
+[node name="Tasks" type="VBoxContainer" parent="Tasks_Rewards"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="Tasks" type="ScrollContainer" parent="Tasks_Rewards/Tasks"]
+custom_minimum_size = Vector2(0, 1550)
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 3
+
+[node name="Tasks" type="VBoxContainer" parent="Tasks_Rewards/Tasks/Tasks"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Rewards" type="VBoxContainer" parent="Tasks_Rewards"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="Rewards" type="ScrollContainer" parent="Tasks_Rewards/Rewards"]
+custom_minimum_size = Vector2(0, 1550)
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 3
+
+[node name="Rewards" type="VBoxContainer" parent="Tasks_Rewards/Rewards/Rewards"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 3790.0
+offset_bottom = 250.0
+
+[node name="Home" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 2
+action_mode = 0
+texture_normal = ExtResource("3_2df7o")
+texture_pressed = ExtResource("3_2df7o")
+texture_hover = ExtResource("3_2df7o")
+texture_focused = ExtResource("3_2df7o")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="PointCount" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 100
+text = "Points: 0"
+
+[connection signal="pressed" from="HBoxContainer/Home" to="." method="_on_home_pressed"]

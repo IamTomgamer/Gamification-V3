@@ -1,4 +1,4 @@
-3.0: Release
+3.0: Release (finished)
 	3.0.0: Finished
 		Working systems
 			Users
@@ -6,8 +6,10 @@
 			rewards
 3.1: Parental Update
 	3.1.0:
-		adding/removing tasks/rewards can now only be done by parents/individuals
+		Adding working Parent User Type
+		Adding working Child User Type
 	3.1.1:
+		adding/removing tasks/rewards can now only be done by parents/individuals
 		Rewards now have an option: "acceptance required"
 		parents can have different settings for different children
 	3.1.2:

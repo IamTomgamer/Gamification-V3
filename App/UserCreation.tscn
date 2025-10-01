@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqdcqcnpg48fa"]
+[gd_scene load_steps=7 format=3 uid="uid://bqdcqcnpg48fa"]
 
 [ext_resource type="Theme" uid="uid://cgv6neoc7e3eg" path="res://Themes/UserCreation.tres" id="1_cnhyf"]
 [ext_resource type="Script" uid="uid://db6tesvbyblws" path="res://user_creation.gd" id="1_jw23x"]
 [ext_resource type="Texture2D" uid="uid://dmsmel3whhgfw" path="res://Textures/Icons/Home.webp" id="3_b6hwb"]
 [ext_resource type="Script" uid="uid://s5blcsvopd4a" path="res://pfp_drop_zone.gd" id="4_jw23x"]
+[ext_resource type="Script" uid="uid://b23eddxe46one" path="res://parent.gd" id="5_b6hwb"]
 
 [sub_resource type="Theme" id="Theme_jw23x"]
 Button/font_sizes/font_size = 16
@@ -92,22 +93,57 @@ text = "Save User"
 [node name="Parent" type="HBoxContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
+script = ExtResource("5_b6hwb")
 metadata/_tab_index = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Parent"]
+[node name="LeftSide" type="VBoxContainer" parent="TabContainer/Parent"]
 layout_mode = 2
-tooltip_text = "Work In Progress"
+size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="TabContainer/Parent/VBoxContainer2"]
+[node name="Name" type="LineEdit" parent="TabContainer/Parent/LeftSide"]
 layout_mode = 2
-tooltip_text = "Work In Progress"
-mouse_filter = 1
-theme_override_font_sizes/font_size = 100
-text = "Work In Progress"
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme = ExtResource("1_cnhyf")
+placeholder_text = "Name"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Parent"]
+[node name="Age" type="LineEdit" parent="TabContainer/Parent/LeftSide"]
 layout_mode = 2
-tooltip_text = "Work In Progress"
+placeholder_text = "Age"
+
+[node name="RightSide" type="VBoxContainer" parent="TabContainer/Parent"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UploadButton" type="Button" parent="TabContainer/Parent/RightSide"]
+layout_mode = 2
+text = "Choose your Profile Picture"
+
+[node name="PfpDialog" type="FileDialog" parent="TabContainer/Parent/RightSide"]
+oversampling_override = 1.0
+title = "Open a File"
+size = Vector2i(1920, 1080)
+content_scale_mode = 2
+content_scale_factor = 2.55
+theme = SubResource("Theme_jw23x")
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png", "*.jpg", "*.jpeg", "*.webp")
+
+[node name="PfpDropZone" type="TextureRect" parent="TabContainer/Parent/RightSide"]
+z_index = 10
+custom_minimum_size = Vector2(750, 750)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 7
+script = ExtResource("4_jw23x")
+
+[node name="Save User" type="Button" parent="TabContainer/Parent/RightSide"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Save User"
 
 [node name="Child" type="HBoxContainer" parent="TabContainer"]
 visible = false
@@ -137,4 +173,7 @@ size = Vector2i(160, 295)
 theme = ExtResource("1_cnhyf")
 
 [connection signal="pressed" from="TabContainer/Home" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="TabContainer/Individual/RightSide/UploadButton" to="." method="_on_upload_button_pressed"]
 [connection signal="pressed" from="TabContainer/Individual/RightSide/Save User" to="." method="_on_save_user_pressed"]
+[connection signal="pressed" from="TabContainer/Parent/RightSide/UploadButton" to="TabContainer/Parent" method="_on_upload_button_pressed"]
+[connection signal="pressed" from="TabContainer/Parent/RightSide/Save User" to="TabContainer/Parent" method="_on_save_user_pressed"]

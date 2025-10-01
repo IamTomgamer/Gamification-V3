@@ -2,8 +2,8 @@ extends Control
 
 @onready var folder_name = UserState.current_user
 @onready var info_path = "user://users/" + folder_name + "/info.json"
-@onready var task_path = "user://users/" + folder_name + "/tasks.json"
-@onready var reward_path = "user://users/" + folder_name + "/rewards.json"
+@onready var task_path = "user://users/" + folder_name + "/Tasks.json"
+@onready var reward_path = "user://users/" + folder_name + "/Rewards.json"
 
 @onready var task_button = preload("res://Tasks.tscn")
 @onready var reward_button = preload("res://Rewards.tscn")
@@ -101,7 +101,7 @@ func add_reward_from_input():
 # ✅ Load and sort tasks
 func load_tasks():
 	if not FileAccess.file_exists(task_path):
-		print("No tasks.json found for", folder_name)
+		print("No tasks.json found for ", folder_name)
 		return
 
 	var file = FileAccess.open(task_path, FileAccess.READ)
@@ -121,7 +121,7 @@ func load_tasks():
 # ✅ Load and sort rewards
 func load_rewards():
 	if not FileAccess.file_exists(reward_path):
-		print("No rewards.json found for", folder_name)
+		print("No rewards.json found for ", folder_name)
 		return
 
 	var file = FileAccess.open(reward_path, FileAccess.READ)
