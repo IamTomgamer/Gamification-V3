@@ -1,16 +1,17 @@
 72322a848ab928aa5c89f0cb78209805
-::res://::1759304602
+::res://::1759344387
+child.gd::GDScript::8723365677730729817::1759337457::0::1::::<>Control<><>0<>0<><>::
 export_presets.cfg::TextFile::-1::1759253950::0::1::::<><><>0<>0<><>::
 Global.gd::GDScript::4720437972542092588::1759302051::0::1::::<>Node<><>0<>0<><>::
 icon.svg::CompressedTexture2D::447816293966568905::1759171180::1759213904::1::::<><><>0<>0<>33ee703ed67b3f335d24371db4c74e0e<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 parent.gd::GDScript::4339570457708712190::1759303839::0::1::::<>Control<><>0<>0<><>::
 pfp_drop_zone.gd::GDScript::1325411012658722910::1759300921::0::1::::<>TextureRect<><>0<>0<><>::
 Pipeline.txt::TextFile::-1::1759300255::0::1::::<><><>0<>0<><>::
-Rewards.tscn::PackedScene::5902765807476554654::1759252019::0::1::::<><><>0<>0<><>::uid://bfxl0kk7ysprr::::res://Textures/Icons/trashwhite.png<>uid://b5vhnrxr5ug1y::::res://Textures/Icons/trashdark.png<>uid://bpunk03eutvnp::::res://Textures/Icons/trashlightgrey.png
+Rewards.tscn::PackedScene::5902765807476554654::1759327160::0::1::::<><><>0<>0<><>::uid://bfxl0kk7ysprr::::res://Textures/Icons/trashwhite.png<>uid://b5vhnrxr5ug1y::::res://Textures/Icons/trashdark.png<>uid://bpunk03eutvnp::::res://Textures/Icons/trashlightgrey.png
 Tasks.tscn::PackedScene::5735248688451653186::1759252018::0::1::::<><><>0<>0<><>::uid://b5vhnrxr5ug1y::::res://Textures/Icons/trashdark.png<>uid://bpunk03eutvnp::::res://Textures/Icons/trashlightgrey.png<>uid://bfxl0kk7ysprr::::res://Textures/Icons/trashwhite.png
-User Select.tscn::PackedScene::4204918237997622862::1759302536::0::1::::<><><>0<>0<><>::uid://ycq353xd8d0t::::res://user_select.gd
+User Select.tscn::PackedScene::4204918237997622862::1759321323::0::1::::<><><>0<>0<><>::uid://ycq353xd8d0t::::res://user_select.gd
 UserCard.tscn::PackedScene::7066742088693986463::1759230439::0::1::::<><><>0<>0<><>::uid://bwwxig0ujligu::::res://Users/MHNL.jpeg<>uid://8skpxi5tp1yj::::res://Themes/UserCard1.tres<>uid://dgkufcixb7m6d::::res://Themes/UserCard.tres
-UserCreation.tscn::PackedScene::3515785447671694998::1759303839::0::1::::<><><>0<>0<><>::uid://cgv6neoc7e3eg::::res://Themes/UserCreation.tres<>uid://db6tesvbyblws::::res://user_creation.gd<>uid://dmsmel3whhgfw::::res://Textures/Icons/Home.webp<>uid://s5blcsvopd4a::::res://pfp_drop_zone.gd<>uid://b23eddxe46one::::res://parent.gd
+UserCreation.tscn::PackedScene::3515785447671694998::1759344361::0::1::::<><><>0<>0<><>::uid://cgv6neoc7e3eg::::res://Themes/UserCreation.tres<>uid://db6tesvbyblws::::res://user_creation.gd<>uid://dmsmel3whhgfw::::res://Textures/Icons/Home.webp<>uid://s5blcsvopd4a::::res://pfp_drop_zone.gd<>uid://b23eddxe46one::::res://parent.gd<>uid://dwjws8j8r4ehd::::res://child.gd
 UserState.gd::GDScript::6043269820901084213::1759302735::0::1::::<>Node<><>0<>0<><>::
 user_creation.gd::GDScript::7294608349070126610::1759302536::0::1::::<>Control<><>0<>0<><>::
 user_select.gd::GDScript::1689684096939850377::1759300441::0::1::::<>Control<><>0<>0<><>::
@@ -39,10 +40,10 @@ MHNL.jpeg::CompressedTexture2D::3977402686185385000::1759230221::1759230221::1::
 ::res://Users/Photos/::1759213905
 plus.png::CompressedTexture2D::1785603944061844801::1759174232::1759213904::1::::<><><>0<>0<>bd8682bf38524452056d5d189ed8a174<>res://.godot/imported/plus.png-ada49e489bbd66d1ee887fcab4c6fd0a.ctex::
 Tom.jpeg::CompressedTexture2D::5721471974247362248::1759173538::1759213905::1::::<><><>0<>0<>b689be3ef249661ac61573c7c64860e0<>res://.godot/imported/Tom.jpeg-6290c76aa2cafd3b8d9d989d02ed669b.ctex::
-::res://UserTypes/::1759304559
+::res://UserTypes/::1759322685
 ChildUser.tscn::PackedScene::6778776218582496297::1759300847::0::1::::<><><>0<>0<><>::uid://dyof602puxao8::::res://UserTypes/child_user.gd<>uid://dmsmel3whhgfw::::res://Textures/Icons/Home.webp
-child_user.gd::GDScript::8873055887026436757::1759300845::0::1::::<>Control<><>0<>0<><>::
+child_user.gd::GDScript::8873055887026436757::1759322086::0::1::::<>Control<><>0<>0<><>::
 IndependantUser.tscn::PackedScene::3218983873658209806::1759300463::0::1::::<><><>0<>0<><>::uid://4k582h7cxx8v::::res://UserTypes/independant_user.gd<>uid://dmsmel3whhgfw::::res://Textures/Icons/Home.webp<>uid://bjnrclusr2ax4::::res://Themes/taskrewardbuttons.tres
 independant_user.gd::GDScript::2058002114427015147::1759300845::0::1::::<>Control<><>0<>0<><>::
-ParentUser.tscn::PackedScene::3302003759453554517::1759304448::0::1::::<><><>0<>0<><>::uid://bc4ccau673pe4::::res://UserTypes/parent_user.gd<>uid://bjnrclusr2ax4::::res://Themes/taskrewardbuttons.tres<>uid://dmsmel3whhgfw::::res://Textures/Icons/Home.webp
-parent_user.gd::GDScript::2586790363758709281::1759304448::0::1::::<>Control<><>0<>0<><>::
+ParentUser.tscn::PackedScene::3302003759453554517::1759322109::0::1::::<><><>0<>0<><>::uid://bc4ccau673pe4::::res://UserTypes/parent_user.gd<>uid://cpkupd8fu521a::::res://Textures/Icons/ArrowLeft.png<>uid://bjnrclusr2ax4::::res://Themes/taskrewardbuttons.tres<>uid://dmsmel3whhgfw::::res://Textures/Icons/Home.webp<>uid://bbrgecpb6ip56::::res://Textures/Icons/ArrowRight.png
+parent_user.gd::GDScript::2586790363758709281::1759322685::0::1::::<>Control<><>0<>0<><>::
