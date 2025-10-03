@@ -249,7 +249,17 @@ func populate_tasks(task: Dictionary):
 	button.pressed.connect(func():
 		on_task_pressed(taskname, points)
 	)
+	if FileAccess.file_exists(info_path):
+		var file = FileAccess.open(info_path, FileAccess.READ)
+		var info = JSON.parse_string(file.get_as_text())
+		file.close()
 
+		if typeof(info) == TYPE_DICTIONARY and info.get("role", "") == "Parent":
+			var target_node = row.get_node("DeleteButton")
+			if target_node:
+				target_node.visible = true
+			else:
+				pass
 	var delete_button = row.get_node("DeleteButton")
 	delete_button.pressed.connect(func():
 		delete_task_from_json(taskname)
@@ -262,6 +272,7 @@ func populate_rewards(reward: Dictionary):
 	var row = reward_button.instantiate()
 	var rewardname = reward.get("name", "Unnamed Reward")
 	var cost = reward.get("cost", 0)
+	var type = reward.get("type", "Normal")  # Default to Normal if missing
 	var info_path = "user://users/" + UserState.current_user + "/info.json"
 	if FileAccess.file_exists(info_path):
 		var file = FileAccess.open(info_path, FileAccess.READ)
@@ -269,15 +280,23 @@ func populate_rewards(reward: Dictionary):
 		file.close()
 
 		if typeof(info) == TYPE_DICTIONARY and info.get("role", "") == "Parent":
-			var target_node = row.get_node("ParentOnlyNode")
+			var target_node = row.get_node("DeleteButton")
 			if target_node:
 				target_node.visible = true
 			else:
 				pass
 
+	match type:
+		"Time":
+			pass
+		"Experience":
+			pass
+		_:
+			pass
+
 
 	var button = row.get_node("RewardButton")
-	button.text = "%s\nPoints: %s" % [rewardname, str(cost)]
+	button.text = "%s\nPoints: %s\nType: %s" % [rewardname, str(cost), type]
 
 	var user_points = get_user_points()
 	button.disabled = cost > user_points

@@ -167,21 +167,44 @@ func populate_tasks(task: Dictionary):
 
 	task_list.add_child(row)
 
+
+func on_time_reward_pressed(name: String, cost: int, duration: int):
+	take_user_points(cost)
+	refresh_points()
+	refresh_rewards()
+
+	var current_time = Time.get_time_dict_from_system()
+	current_time["minute"] += duration
+	print("Time-based reward activated:", name, "ends at", current_time)
+	Global.start_timer(10)
+
 # ✅ Populate reward row
 func populate_rewards(reward: Dictionary):
 	var row = reward_button.instantiate()
 	var rewardname = reward.get("name", "Unnamed Reward")
 	var cost = reward.get("cost", 0)
+	var type = reward.get("type", "Normal")  # Default to Normal if missing
 
 	var button = row.get_node("RewardButton")
-	button.text = "%s\nCost: %s" % [rewardname, str(cost)]
+	button.text = "%s\nCost: %s\nType: %s" % [rewardname, str(cost), type]
 
 	var user_points = get_user_points()
 	button.disabled = cost > user_points
 
-	button.pressed.connect(func():
-		on_reward_pressed(rewardname, cost)
-	)
+	match type:
+		"Time":
+			var duration = reward.get("duration_minutes", 30)
+			button.pressed.connect(func():
+				on_time_reward_pressed(rewardname, cost, duration)
+			)
+		"Experience":
+			button.pressed.connect(func():
+				on_reward_pressed(rewardname, cost)  # same as Normal
+			)
+		_:
+			button.pressed.connect(func():
+				on_reward_pressed(rewardname, cost)
+			)
 
 	var delete_button = row.get_node("DeleteButton")
 	delete_button.pressed.connect(func():

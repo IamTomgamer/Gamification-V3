@@ -1,0 +1,6 @@
+res://UserCreation.tscn
+res://Themes/UserCard1.tres
+res://UserTypes/child_user.gd
+res://Global.gd
+res://UserTypes/parent_user.gd
+res://UserTypes/ParentUser.tscn
