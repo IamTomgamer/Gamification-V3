@@ -5,7 +5,7 @@
       - Users\
       - tasks\
       - rewards\
-3.1: Parental Update (1/3 finished)\
+- 3.1: Parental Update (1/3 finished)\
    - 3.1.0: (finished)\
       - Adding working Parent User Type\
       - Adding working Child User Type\
@@ -18,14 +18,14 @@
    - 3.1.2:\
       - New User-Type: Group\
       - New Standard Reward: "give to group"\
-3.2: Security Update (0/2 finished)\
+- 3.2: Security Update (0/2 finished)\
    - 3.2.0:\
       - Passwords\
       - Password encryption\
    - 3.2.1:\
       - Tasks.json encryption\
       - Rewards.json encryption\
-3.3: Visual Update (0/3 finished)\
+- 3.3: Visual Update (0/3 finished)\
    - 3.3.0:\
       - Animations\
       - Textures\
@@ -34,14 +34,14 @@
    - 3.3.2:\
       - Skins\
       - Birthday Animations\
-3.4: New Settings (0/1 finished)\
+- 3.4: New Settings (0/1 finished)\
    - 3.4.0:\
       - Main Menu Background\
       - New Fonts Setting\
-3.5: ??? (0/? finished)\
+- 3.5: ??? (0/? finished)\
    - 3.5.0:\
       - ???\
-3.6: Integration Update (0/2 finished)\
+- 3.6: Integration Update (0/2 finished)\
    - 3.6.0:\
       - NAS/Database Integration\
    - 3.6.1:\
