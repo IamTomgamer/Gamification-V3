@@ -1,11 +1,11 @@
-MarginContainer
+Label
 VBoxContainer
+Button
+MarginContainer
 TextureButton
 TextureRect
 HBoxContainer
-Label
 OptionButton
-Button
 ScrollContainer
 LineEdit
 ColorRect

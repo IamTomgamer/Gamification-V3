@@ -273,9 +273,9 @@ func populate_rewards(reward: Dictionary):
 	var rewardname = reward.get("name", "Unnamed Reward")
 	var cost = reward.get("cost", 0)
 	var type = reward.get("type", "Normal")  # Default to Normal if missing
-	var info_path = "user://users/" + UserState.current_user + "/info.json"
-	if FileAccess.file_exists(info_path):
-		var file = FileAccess.open(info_path, FileAccess.READ)
+	var info_path_pop_rew = "user://users/" + UserState.current_user + "/info.json"
+	if FileAccess.file_exists(info_path_pop_rew):
+		var file = FileAccess.open(info_path_pop_rew, FileAccess.READ)
 		var info = JSON.parse_string(file.get_as_text())
 		file.close()
 

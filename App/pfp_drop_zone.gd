@@ -11,8 +11,8 @@ func _on_files_dropped(files: PackedStringArray):
 			var image = Image.new()
 			var err = image.load(file_path)
 			if err == OK:
-				var texture = ImageTexture.create_from_image(image)
-				$TabContainer/Individual/LeftSide/PfpDropZone.texture = texture
+				var texture_on_fi_dr = ImageTexture.create_from_image(image)
+				$TabContainer/Individual/LeftSide/PfpDropZone.texture = texture_on_fi_dr
 
 				# Save to Temp
 				if not DirAccess.dir_exists_absolute("user://Temp"):

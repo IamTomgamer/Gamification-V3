@@ -1,2 +1,4 @@
 # Gamification V3
-A Gamification app (mostly for personal use)
+Gamification App with:
+Users (Child, Parent, Individual user-types)
+Point/Task/Reward system

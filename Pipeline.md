@@ -1,0 +1,48 @@
+# Planned Updates
+3.0: Release (1/1 finished)
+	3.0.0: Finished
+		Working systems
+			Users
+			tasks
+			rewards
+3.1: Parental Update (1/3 finished)
+	3.1.0: (finished)
+		Adding working Parent User Type
+		Adding working Child User Type
+		adding/removing tasks/rewards can now only be done by parents/individuals
+	3.1.1:
+		New Reward Types
+			Normal
+			Time-based
+			Experience
+	3.1.2:
+		New User-Type: Group
+		New Standard Reward: "give to group"
+3.2: Security Update (0/2 finished)
+	3.2.0:
+		Passwords
+		Password encryption
+	3.2.1:
+		Tasks.json encryption
+		Rewards.json encryption
+3.3: Visual Update (0/3 finished)
+	3.3.0:
+		Animations
+		Textures
+	3.3.1:
+		Different Views (list, gallery, etc.)
+	3.3.2:
+		Skins
+		Birthday Animations
+3.4: New Settings (0/1 finished)
+	3.4.0:
+		Main Menu Background
+		New Fonts Setting
+3.5: ??? (0/? finished)
+	3.5.0:
+		???
+3.6: Integration Update (0/2 finished)
+	3.6.0:
+		NAS/Database Integration
+	3.6.1:
+		Mobile App Integration

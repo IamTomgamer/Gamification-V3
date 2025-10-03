@@ -237,4 +237,5 @@ theme = ExtResource("1_cnhyf")
 [connection signal="pressed" from="TabContainer/Individual/RightSide/Save User" to="." method="_on_save_user_pressed"]
 [connection signal="pressed" from="TabContainer/Parent/RightSide/UploadButton" to="TabContainer/Parent" method="_on_upload_button_pressed"]
 [connection signal="pressed" from="TabContainer/Parent/RightSide/Save User" to="TabContainer/Parent" method="_on_save_user_pressed"]
+[connection signal="pressed" from="TabContainer/Child/RightSide/UploadButton" to="TabContainer/Child" method="_on_upload_button_pressed"]
 [connection signal="pressed" from="TabContainer/Child/RightSide/Save User" to="TabContainer/Child" method="_on_save_user_pressed"]

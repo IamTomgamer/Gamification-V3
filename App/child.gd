@@ -8,9 +8,6 @@ extends Control
 @onready var age_field = $LeftSide/Age
 @onready var create_button = $"RightSide/Save User"
 
-@onready var ownrewardsq = $LeftSide/HBoxContainer/OptionButton
-
-
 
 func files_dropped(files: PackedStringArray):
 	print("Files dropped:", files)
@@ -139,7 +136,6 @@ func _move_pfp_to_user_folder(user_path: String):
 func _on_save_user_pressed():
 	var user_name = name_field.text.strip_edges()
 	var user_age = age_field.text.strip_edges()
-	var ownrewardsynchoice = ownrewardsq.get_item_text(ownrewardsq.selected)
 
 
 	if user_name == "":
@@ -165,10 +161,7 @@ func _on_save_user_pressed():
 			_on_user_folder_created(user_name, user_path)
 		else:
 			Global.show_error("Could not create user folder.", $"../../CanvasLayer/ErrorPopup")
-	if ownrewardsq.get_item_text(ownrewardsq.selected) == "Yes":
-		print("You chose Yes")
-	else:
-		print("You chose No")
+
 
 func _on_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://User Select.tscn")

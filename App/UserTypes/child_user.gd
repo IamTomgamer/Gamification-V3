@@ -11,13 +11,8 @@ extends Control
 @onready var task_list = $Tasks_Rewards/Tasks/Tasks/Tasks
 @onready var reward_list = $Tasks_Rewards/Rewards/Rewards/Rewards
 
-@onready var task_name_input = $Tasks_Rewards/Tasks/TaskName
-@onready var task_points_input = $Tasks_Rewards/Tasks/Points_AddTask/PointCount
-@onready var add_task_button = $Tasks_Rewards/Tasks/Points_AddTask/AddTask
-
-@onready var reward_name_input = $Tasks_Rewards/Rewards/RewardName
-@onready var reward_cost_input = $Tasks_Rewards/Rewards/Price_AddReward/Price
-@onready var add_reward_button = $Tasks_Rewards/Rewards/Price_AddReward/AddReward
+@onready var default_task_path = "user://Defaults/Tasks.json"
+@onready var default_reward_path = "user://Defaults/Rewards.json"
 
 func _ready():
 	refresh_points()
@@ -25,90 +20,28 @@ func _ready():
 	load_rewards()
 
 
-# ✅ Add task from input fields
-func add_task_from_input():
-	var taskname = task_name_input.text.strip_edges()
-	var points_text = task_points_input.text.strip_edges()
-
-	if taskname == "" or points_text == "":
-		print("Task name or points missing")
-		return
-
-	var points = int(points_text)
-	var new_task = {
-		"name": taskname,
-		"points": points
-	}
-
-	var tasks = []
-	if FileAccess.file_exists(task_path):
-		var file = FileAccess.open(task_path, FileAccess.READ)
-		tasks = JSON.parse_string(file.get_as_text())
-		file.close()
-
-	if typeof(tasks) != TYPE_ARRAY:
-		tasks = []
-
-	tasks.append(new_task)
-
-	var save_file = FileAccess.open(task_path, FileAccess.WRITE)
-	save_file.store_string(JSON.stringify(tasks, "\t"))
-	save_file.close()
-
-	print("Added new task:", taskname, "with", points, "points")
-
-	task_name_input.text = ""
-	task_points_input.text = ""
-	refresh_tasks()
-
-# ✅ Add reward from input fields
-func add_reward_from_input():
-	var rewardname = reward_name_input.text.strip_edges()
-	var cost_text = reward_cost_input.text.strip_edges()
-
-	if rewardname == "" or cost_text == "":
-		print("Reward name or cost missing")
-		return
-
-	var cost = int(cost_text)
-	var new_reward = {
-		"name": rewardname,
-		"cost": cost
-	}
-
-	var rewards = []
-	if FileAccess.file_exists(reward_path):
-		var file = FileAccess.open(reward_path, FileAccess.READ)
-		rewards = JSON.parse_string(file.get_as_text())
-		file.close()
-
-	if typeof(rewards) != TYPE_ARRAY:
-		rewards = []
-
-	rewards.append(new_reward)
-
-	var save_file = FileAccess.open(reward_path, FileAccess.WRITE)
-	save_file.store_string(JSON.stringify(rewards, "\t"))
-	save_file.close()
-
-	print("Added new reward:", rewardname, "costing", cost, "points")
-
-	reward_name_input.text = ""
-	reward_cost_input.text = ""
-	refresh_rewards_list()
-
 # ✅ Load and sort tasks
 func load_tasks():
-	if not FileAccess.file_exists(task_path):
-		print("No tasks.json found for ", folder_name)
-		return
+	var task_data = []
 
-	var file = FileAccess.open(task_path, FileAccess.READ)
-	var task_data = JSON.parse_string(file.get_as_text())
-	file.close()
+	# Load user tasks if available
+	if FileAccess.file_exists(task_path):
+		var file = FileAccess.open(task_path, FileAccess.READ)
+		task_data = JSON.parse_string(file.get_as_text())
+		file.close()
 
+	# If user tasks are missing or invalid, load defaults
+	if typeof(task_data) != TYPE_ARRAY or task_data.is_empty():
+		print("No valid user tasks found for", folder_name, "- loading defaults")
+		var default_path = "user://Defaults/Tasks.json"
+		if FileAccess.file_exists(default_path):
+			var file = FileAccess.open(default_path, FileAccess.READ)
+			task_data = JSON.parse_string(file.get_as_text())
+			file.close()
+
+	# Final validation
 	if typeof(task_data) != TYPE_ARRAY:
-		print("Invalid tasks.json format")
+		print("Invalid task format")
 		return
 
 	task_data.sort_custom(Callable(self, "compare_tasks"))
@@ -117,20 +50,28 @@ func load_tasks():
 		if typeof(task) == TYPE_DICTIONARY:
 			populate_tasks(task)
 
-
-
 # ✅ Load and sort rewards
 func load_rewards():
-	if not FileAccess.file_exists(reward_path):
-		print("No rewards.json found for ", folder_name)
-		return
+	var reward_data = []
 
-	var file = FileAccess.open(reward_path, FileAccess.READ)
-	var reward_data = JSON.parse_string(file.get_as_text())
-	file.close()
+	# Load user rewards if available
+	if FileAccess.file_exists(reward_path):
+		var file = FileAccess.open(reward_path, FileAccess.READ)
+		reward_data = JSON.parse_string(file.get_as_text())
+		file.close()
 
+	# If user rewards are missing or invalid, load defaults
+	if typeof(reward_data) != TYPE_ARRAY or reward_data.is_empty():
+		print("No valid user rewards found for", folder_name, "- loading defaults")
+		var default_path = "user://Defaults/Rewards.json"
+		if FileAccess.file_exists(default_path):
+			var file = FileAccess.open(default_path, FileAccess.READ)
+			reward_data = JSON.parse_string(file.get_as_text())
+			file.close()
+
+	# Final validation
 	if typeof(reward_data) != TYPE_ARRAY:
-		print("Invalid rewards.json format")
+		print("Invalid reward format")
 		return
 
 	reward_data.sort_custom(Callable(self, "compare_rewards"))
@@ -138,6 +79,7 @@ func load_rewards():
 	for reward in reward_data:
 		if typeof(reward) == TYPE_DICTIONARY:
 			populate_rewards(reward)
+
 
 # ✅ Sorting functions
 func compare_tasks(a, b) -> bool:
@@ -168,14 +110,14 @@ func populate_tasks(task: Dictionary):
 	task_list.add_child(row)
 
 
-func on_time_reward_pressed(name: String, cost: int, duration: int):
+func on_time_reward_pressed(reward_name: String, cost: int, duration: int):
 	take_user_points(cost)
 	refresh_points()
 	refresh_rewards()
 
 	var current_time = Time.get_time_dict_from_system()
 	current_time["minute"] += duration
-	print("Time-based reward activated:", name, "ends at", current_time)
+	print("Time-based reward activated:", reward_name, "ends at", current_time)
 	Global.start_timer(10)
 
 # ✅ Populate reward row

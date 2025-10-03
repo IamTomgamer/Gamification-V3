@@ -1,5 +1,7 @@
 extends Node
 
+
+var app_name = "Gamification"
 func start_timer(minutes: float):
 	var seconds = int(minutes * 60)
 	var timer = get_tree().create_timer(seconds)

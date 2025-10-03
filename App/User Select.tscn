@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b055nhytts367"]
+[gd_scene load_steps=3 format=3 uid="uid://b055nhytts367"]
 
 [ext_resource type="Script" uid="uid://ycq353xd8d0t" path="res://user_select.gd" id="1_4w36s"]
+[ext_resource type="Theme" uid="uid://cgv6neoc7e3eg" path="res://Themes/UserCreation.tres" id="2_4w36s"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -42,3 +43,10 @@ offset_bottom = 2060.0
 layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ErrorPopup" type="AcceptDialog" parent="CanvasLayer"]
+oversampling_override = 1.0
+size = Vector2i(160, 295)
+theme = ExtResource("2_4w36s")
