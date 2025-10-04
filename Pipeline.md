@@ -1,17 +1,17 @@
 # Planned Updates
 3.0: Release (1/1 finished)\
-	3.0.0: Finished\
-		Working systems\
-			Users\
-			tasks\
-			rewards\
+    3.0.0: Finished\
+        Working systems\
+            Users\
+            tasks\
+            rewards\
 3.1: Parental Update (1/3 finished)\
-	3.1.0: (finished)\
-		Adding working Parent User Type\
-		Adding working Child User Type\
-		adding/removing tasks/rewards can now only be done by parents/individuals\
-	3.1.1:\
-		New Reward Types\
+    3.1.0: (finished)\
+        Adding working Parent User Type\
+        Adding working Child User Type\
+        adding/removing tasks/rewards can now only be done by parents/individuals\
+    3.1.1:\
+        New Reward Types\
 			Normal\
 			Time-based\
 			Experience\
