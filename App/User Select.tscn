@@ -14,23 +14,32 @@ script = ExtResource("1_4w36s")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
-offset_left = 1290.0
 offset_top = 356.0
-offset_right = 2540.0
+offset_right = 3840.0
 offset_bottom = 631.0
 pivot_offset = Vector2(625, 0)
 theme_override_font_sizes/font_size = 200
 text = "Gamification"
+horizontal_alignment = 1
 
 [node name="Title2" type="Label" parent="."]
 layout_mode = 0
-offset_left = 1652.0
 offset_top = 577.0
-offset_right = 2197.0
+offset_right = 3840.0
 offset_bottom = 683.0
 pivot_offset = Vector2(272.5, 0)
 theme_override_font_sizes/font_size = 77
 text = "By Tom Helder"
+horizontal_alignment = 1
+
+[node name="countdownlabel" type="Label" parent="."]
+layout_mode = 0
+offset_top = 666.0
+offset_right = 3840.0
+offset_bottom = 803.0
+theme_override_font_sizes/font_size = 100
+text = "Countdown"
+horizontal_alignment = 1
 
 [node name="UserScroll" type="ScrollContainer" parent="."]
 layout_mode = 0

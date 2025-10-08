@@ -62,7 +62,7 @@ offset_bottom = 250.0
 [node name="Home" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 0
 action_mode = 0
 texture_normal = ExtResource("3_2df7o")
 texture_pressed = ExtResource("3_2df7o")
@@ -73,8 +73,14 @@ stretch_mode = 5
 
 [node name="PointCount" type="Label" parent="HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 100
 text = "Points: 0"
+
+[node name="CountdownLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 100
+text = "Countdown"
 
 [connection signal="pressed" from="HBoxContainer/Home" to="." method="_on_home_pressed"]

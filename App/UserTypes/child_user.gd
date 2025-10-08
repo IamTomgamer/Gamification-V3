@@ -14,11 +14,30 @@ extends Control
 @onready var default_task_path = "user://Defaults/Tasks.json"
 @onready var default_reward_path = "user://Defaults/Rewards.json"
 
+@onready var countdown_label = $HBoxContainer/CountdownLabel
+
 func _ready():
+	Global.countdown_updated.connect(update_countdown)
+	Global.countdown_finished.connect(hide_countdown)
+
+	# If timer is already running when scene loads
+	if Global.timer_running:
+		update_countdown(Global.countdown_time)
+	else:
+		countdown_label.visible = false
 	refresh_points()
 	load_tasks()
 	load_rewards()
 
+func update_countdown(time_left: int):
+	countdown_label.visible = time_left > 0
+	# Format as mm:ss if you like
+	var minutes = int(time_left / 60.0)
+	var seconds = int(time_left % 60)
+	countdown_label.text = "%02d:%02d" % [minutes, seconds]
+	
+func hide_countdown():
+	countdown_label.visible = false
 
 # ✅ Load and sort tasks
 func load_tasks():
@@ -108,18 +127,7 @@ func populate_tasks(task: Dictionary):
 	)
 
 	task_list.add_child(row)
-
-
-func on_time_reward_pressed(reward_name: String, cost: int, duration: int):
-	take_user_points(cost)
-	refresh_points()
-	refresh_rewards()
-
-	var current_time = Time.get_time_dict_from_system()
-	current_time["minute"] += duration
-	print("Time-based reward activated:", reward_name, "ends at", current_time)
-	Global.start_timer(10)
-
+	
 # ✅ Populate reward row
 func populate_rewards(reward: Dictionary):
 	var row = reward_button.instantiate()
@@ -135,9 +143,8 @@ func populate_rewards(reward: Dictionary):
 
 	match type:
 		"Time":
-			var duration = reward.get("duration_minutes", 30)
 			button.pressed.connect(func():
-				on_time_reward_pressed(rewardname, cost, duration)
+				on_reward_pressed(rewardname, cost)
 			)
 		"Experience":
 			button.pressed.connect(func():
@@ -297,6 +304,25 @@ func on_reward_pressed(rewardname: String, cost: int):
 	take_user_points(cost)
 	refresh_points()
 	refresh_rewards()
+
+	# Look up the reward in the JSON to check its type
+	if FileAccess.file_exists(reward_path):
+		var file = FileAccess.open(reward_path, FileAccess.READ)
+		var reward_data = JSON.parse_string(file.get_as_text())
+		file.close()
+
+		if typeof(reward_data) == TYPE_ARRAY:
+			for reward in reward_data:
+				if typeof(reward) == TYPE_DICTIONARY and reward.get("name", "") == rewardname:
+					if reward.get("type", "") == "Timer":
+						# duration is stored in minutes, default 10 minutes
+						var minutes = int(reward.get("duration", 10))
+						var duration_seconds = minutes * 60
+						print("Starting global timer for", minutes, "minutes (", duration_seconds, "seconds )")
+						Global.start_countdown(duration_seconds)
+					break
+
+
 
 # ✅ Home button
 func _on_home_pressed():

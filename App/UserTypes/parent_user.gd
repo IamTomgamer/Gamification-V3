@@ -24,6 +24,10 @@ extends Control
 @onready var right_button = $Tasks_Rewards/VBoxContainer2/VBoxContainer/HBoxContainer/MarginContainer2/RightButton
 @onready var child_photo = $Tasks_Rewards/VBoxContainer2/VBoxContainer/HBoxContainer/ChildPhoto
 
+@onready var reward_type_button = $Tasks_Rewards/TasksAndRewards/Rewards/HBoxContainer/RewardTypeButton
+@onready var duration_node = $Tasks_Rewards/TasksAndRewards/Rewards/HBoxContainer/TimerDuration
+
+
 var child_users: Array = []
 var current_child_index: int = 0
 
@@ -38,6 +42,16 @@ func _ready():
 	add_reward_button.pressed.connect(add_reward_from_input)
 	refresh_points()
 	activate_reward_deletion()
+	reward_type_button.select(0)
+	reward_type_button.item_selected.connect(_on_reward_type_selected)
+	# Hide by default
+	duration_node.visible = false
+func _on_reward_type_selected(index: int):
+	var selected_text = reward_type_button.get_item_text(index)
+	if selected_text == "Timer":
+		duration_node.visible = true
+	else:
+		duration_node.visible = false
 
 
 func load_child_users():
@@ -162,6 +176,7 @@ func add_task_from_input():
 func add_reward_from_input():
 	var rewardname = reward_name_input.text.strip_edges()
 	var cost_text = reward_cost_input.text.strip_edges()
+	var rewardtype = reward_type_button.get_item_text(reward_type_button.get_selected())
 
 	if rewardname == "" or cost_text == "":
 		print("Reward name or cost missing")
@@ -170,8 +185,16 @@ func add_reward_from_input():
 	var cost = int(cost_text)
 	var new_reward = {
 		"name": rewardname,
-		"cost": cost
+		"cost": cost,
+		"type": rewardtype
 	}
+
+	# Only add duration if type is "Timer"
+	if rewardtype == "Timer":
+		# Assuming you have a SpinBox/LineEdit for duration input
+		var minutes_text = duration_node.text.strip_edges() if duration_node is LineEdit else str(duration_node.value)
+		var minutes = int(minutes_text) if minutes_text != "" else 10
+		new_reward["duration"] = minutes
 
 	var rewards = []
 	if FileAccess.file_exists(reward_path):
@@ -188,10 +211,12 @@ func add_reward_from_input():
 	save_file.store_string(JSON.stringify(rewards, "\t"))
 	save_file.close()
 
-	print("Added new reward:", rewardname, "costing", cost, "points")
+	print("Added new reward:", rewardname, "costing", cost, "points with type", rewardtype, "and duration:", new_reward.get("duration", "N/A"))
 
 	reward_name_input.text = ""
 	reward_cost_input.text = ""
+	reward_type_button.select(0)  # Reset to first option if desired
+	duration_node.visible = false # Hide duration input again
 	refresh_rewards_list()
 
 func load_tasks():
@@ -452,3 +477,7 @@ func on_reward_pressed(rewardname: String, cost: int):
 
 func _on_home_pressed():
 	get_tree().change_scene_to_file("res://User Select.tscn")
+
+
+func _on_reward_type_button_item_selected(index: int) -> void:
+	pass # Replace with function body.

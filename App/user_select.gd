@@ -64,6 +64,23 @@ func create_default_files():
 
 	print("✅ Default files created")
 	popup.hide()
+	
+	
+	
+@onready var countdown_label = $countdownlabel
+
+
+func update_countdown(time_left: int):
+	countdown_label.visible = time_left > 0
+	# Format as mm:ss if you like
+	var minutes = int(time_left / 60.0)
+	var seconds = int(time_left % 60)
+	countdown_label.text = "%02d:%02d" % [minutes, seconds]
+
+func hide_countdown():
+	countdown_label.visible = false
+
+
 func _ready():
 	check_default_files()
 	var create_button = popup.add_button("Create Defaults", true, "create_defaults")
@@ -72,6 +89,15 @@ func _ready():
 
 	popup.confirmed.connect(open_user_folder)
 	populate_user_cards()
+	Global.countdown_updated.connect(update_countdown)
+	Global.countdown_finished.connect(hide_countdown)
+
+	# If timer is already running when scene loads, show it
+	if Global.timer_running:
+		update_countdown(Global.countdown_time)
+	else:
+		countdown_label.visible = false
+
 
 
 

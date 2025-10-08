@@ -1,0 +1,10 @@
+res://UserTypes/ParentUser.tscn
+res://Themes/UserCard1.tres
+res://Themes/taskrewardbuttons.tres
+res://UserTypes/parent_user.gd
+res://UserTypes/child_user.gd
+res://Global.gd
+res://UserTypes/ChildUser.tscn
+res://UserCreation.tscn
+res://User Select.tscn
+res://user_select.gd
