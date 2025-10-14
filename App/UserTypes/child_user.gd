@@ -127,8 +127,9 @@ func populate_tasks(task: Dictionary):
 	)
 
 	task_list.add_child(row)
-	
-# ✅ Populate reward row
+
+const ICON_SIZE = Vector2(200, 200)  # Set your desired icon size here
+
 func populate_rewards(reward: Dictionary):
 	var row = reward_button.instantiate()
 	var rewardname = reward.get("name", "Unnamed Reward")
@@ -141,19 +142,31 @@ func populate_rewards(reward: Dictionary):
 	var user_points = get_user_points()
 	button.disabled = cost > user_points
 
+	# Load and resize icon based on reward type
+	var icon_path: String
 	match type:
-		"Time":
-			button.pressed.connect(func():
-				on_reward_pressed(rewardname, cost)
-			)
+		"Timer":
+			icon_path = "res://Textures/Icons/RewardTypes/Timer.png"
 		"Experience":
-			button.pressed.connect(func():
-				on_reward_pressed(rewardname, cost)  # same as Normal
-			)
+			icon_path = "res://Textures/Icons/RewardTypes/Experience.png"
 		_:
-			button.pressed.connect(func():
-				on_reward_pressed(rewardname, cost)
-			)
+			icon_path = "res://Textures/Icons/RewardTypes/Normal.png"
+
+	var original_texture = load(icon_path) as Texture2D
+	if original_texture:
+		var image = original_texture.get_image()
+		if image:
+			image.resize(ICON_SIZE.x, ICON_SIZE.y, Image.INTERPOLATE_LANCZOS)
+			var resized_icon = ImageTexture.create_from_image(image)
+			button.icon = resized_icon
+		else:
+			print("Failed to get image from texture:", icon_path)
+	else:
+		print("Failed to load texture:", icon_path)
+
+	button.pressed.connect(func():
+		on_reward_pressed(rewardname, cost)
+	)
 
 	var delete_button = row.get_node("DeleteButton")
 	delete_button.pressed.connect(func():
@@ -162,7 +175,6 @@ func populate_rewards(reward: Dictionary):
 	)
 
 	reward_list.add_child(row)
-
 # ✅ Refresh reward buttons based on current points
 func refresh_rewards():
 	var user_points = get_user_points()
