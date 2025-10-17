@@ -1,7 +1,10 @@
 res://User Select.tscn
 res://Themes/UserCard1.tres
 res://UserTypes/child_user.gd
+<<<<<<< Updated upstream
 res://Rewards.tscn
 res://control.gd
 res://UserTypes/IndependantUser.tscn
 res://Pipeline.txt
+=======
+>>>>>>> Stashed changes
